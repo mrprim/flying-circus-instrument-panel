@@ -29,16 +29,16 @@ export default ({ name }) => {
   return (
     <SvgWrapper style={{ width: '300px' }}>
       <PieChart fill='#B7D4DD' innerRadius={0.5} offsetAngle={-18} radius={0.85}>
-        <PieSegment label={0} />
-        <PieSegment label={1} />
-        <PieSegment label={2} />
-        <PieSegment label={3} />
-        <PieSegment label={4} />
-        <PieSegment label={5} />
-        <PieSegment label={6} />
-        <PieSegment label={7} />
-        <PieSegment label={8} />
-        <PieSegment label={9} />
+        <PieSegment label={0} labelFontSize={0.16} />
+        <PieSegment label={1} labelFontSize={0.16} />
+        <PieSegment label={2} labelFontSize={0.16} />
+        <PieSegment label={3} labelFontSize={0.16} />
+        <PieSegment label={4} labelFontSize={0.16} />
+        <PieSegment label={5} labelFontSize={0.16} />
+        <PieSegment label={6} labelFontSize={0.16} />
+        <PieSegment label={7} labelFontSize={0.16} />
+        <PieSegment label={8} labelFontSize={0.16} />
+        <PieSegment label={9} labelFontSize={0.16} />
 
       </PieChart>
 
