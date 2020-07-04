@@ -1,4 +1,5 @@
 import React from 'react'
+import './index.scss'
 
 const defaultStyle = {
   width: '200px',
@@ -6,6 +7,6 @@ const defaultStyle = {
 }
 
 export default ({ children, style, ...props }) =>
-  <svg viewBox='-1 -1 2 2' {...props} style={{ ...defaultStyle, ...style }}>
+  <svg className='svg-wrapper' viewBox='-1 -1 2 2' {...props} style={{ ...defaultStyle, ...style }}>
     {children}
   </svg>

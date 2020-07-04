@@ -1,25 +1,19 @@
 import React from 'react'
+import getPointOnCircle from '../../utils/getPointOnCircle'
 
-const getCoordinatesForPercent = (percent, scale = 1) => {
-  const x = Math.cos(2 * Math.PI * percent) * scale
-  const y = Math.sin(2 * Math.PI * percent) * scale
-
-  return { x, y }
-}
-
-export default ({ offset = 0, size = 0, innerRadius = 0, radius = 1, style = {}, ...p }) => {
+export default ({ offsetAngle = 0, angle = 0, innerRadius = 0, radius = 1, style = {}, ...p }) => {
   const pointerEvents = !!p.onClick && 'fill'
   style = {
     pointerEvents,
     ...style
   }
 
-  const startOuter = getCoordinatesForPercent(offset, radius)
-  const startInner = getCoordinatesForPercent(offset, innerRadius)
-  const endOuter = getCoordinatesForPercent(offset + size, radius)
-  const endInner = getCoordinatesForPercent(offset + size, innerRadius)
+  const startOuter = getPointOnCircle(offsetAngle, radius)
+  const startInner = getPointOnCircle(offsetAngle, innerRadius)
+  const endOuter = getPointOnCircle(offsetAngle + angle, radius)
+  const endInner = getPointOnCircle(offsetAngle + angle, innerRadius)
 
-  const largeArcFlag = size > 0.5 ? 1 : 0
+  const largeArcFlag = angle > 180 ? 1 : 0
 
   const pathData = [
     `M ${startInner.x} ${startInner.y}`,
