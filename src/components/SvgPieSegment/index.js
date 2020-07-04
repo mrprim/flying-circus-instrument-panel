@@ -1,7 +1,7 @@
 import React from 'react'
 import getPointOnCircle from '../../utils/getPointOnCircle'
 
-export default ({ offsetAngle = 0, angle = 0, innerRadius = 0, radius = 1, style = {}, ...p }) => {
+export default ({ offsetAngle = 0, angle = 0, innerRadius = 0, radius = 1, label, labelFontSize = 0.1, labelStyle = {}, labelRadius, style = {}, ...p }) => {
   const pointerEvents = !!p.onClick && 'fill'
   style = {
     pointerEvents,
@@ -24,5 +24,12 @@ export default ({ offsetAngle = 0, angle = 0, innerRadius = 0, radius = 1, style
     'Z'
   ].join(' ')
 
-  return <path d={pathData} style={style} {...p} />
+  const labelPoint = getPointOnCircle(offsetAngle + (angle / 2), labelRadius || (radius / 2 + innerRadius / 2))
+
+  return (
+    <>
+      <path d={pathData} style={style} {...p} />
+      {label || label === 0 ? <text rotate='90' dominantBaseline='middle' textAnchor='middle' x={labelPoint.x} y={labelPoint.y - labelFontSize / 2} fontSize={labelFontSize}>{label}</text> : null}
+    </>
+  )
 }
