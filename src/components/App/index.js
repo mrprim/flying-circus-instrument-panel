@@ -1,12 +1,12 @@
 import React from 'react'
-import { AmiableForm } from 'amiable-forms'
-import RadialGauge from '../RadialGauge'
+import { AmiableForm, Debug } from 'amiable-forms'
+import Dashboard from '../Dashboard'
 import './index.css'
 
 export default () =>
   <div className='App'>
     <AmiableForm>
-      <RadialGauge name='altitude' />
-      <RadialGauge name='airSpeed' />
+      <Dashboard />
+      <Debug />
     </AmiableForm>
   </div>

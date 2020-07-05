@@ -1,9 +1,9 @@
-import React from 'react'
-import { useField } from 'amiable-forms'
+import React, { useCallback } from 'react'
 import SvgWrapper from '../SvgWrapper'
 import PieChart from '../SvgPieChart'
 import PieSegment from '../SvgPieSegment'
 import Spoke from '../SvgSpoke'
+import useDoubleGaugeField from './useDoubleGaugeField'
 import getPointOnCircle from '../../utils/getPointOnCircle'
 
 const Spokes = props => {
@@ -23,12 +23,29 @@ const Spokes = props => {
   )
 }
 
+const Arrow = ({ angle = 0, radius, ...p }) => {
+  const point = getPointOnCircle(angle, radius - 0.2)
+  const startOuter = getPointOnCircle(angle - 8, radius)
+  const endOuter = getPointOnCircle(angle + 8, radius)
+
+  const pathData = [
+    `M ${point.x} ${point.y}`,
+    `L ${startOuter.x} ${startOuter.y}`,
+    `A ${radius} ${radius} 0 0 1 ${endOuter.x} ${endOuter.y}`,
+    'Z'
+  ].join(' ')
+
+  return <path stroke='black' strokeWidth='.02' fill='#344478' d={pathData} {...p} />
+}
+
 export default ({ name }) => {
-  // const { value, setValue } = useField({ name })
+  const { onesValue, tensValue, setOnesValue, setTensValue } = useDoubleGaugeField({ name })
+  const onesClickHandler = useCallback(props => () => setOnesValue(props.index), [setOnesValue])
+  const tensClickHandler = useCallback(props => () => setTensValue(props.index), [setTensValue])
 
   return (
     <SvgWrapper style={{ width: '300px' }}>
-      <PieChart fill='#B7D4DD' innerRadius={0.5} offsetAngle={-18} radius={0.85}>
+      <PieChart fill='#B7D4DD' innerRadius={0.45} offsetAngle={-18} radius={0.85} onClickHandler={onesClickHandler}>
         <PieSegment label={0} labelFontSize={0.16} />
         <PieSegment label={1} labelFontSize={0.16} />
         <PieSegment label={2} labelFontSize={0.16} />
@@ -39,17 +56,17 @@ export default ({ name }) => {
         <PieSegment label={7} labelFontSize={0.16} />
         <PieSegment label={8} labelFontSize={0.16} />
         <PieSegment label={9} labelFontSize={0.16} />
-
       </PieChart>
 
       <circle r={0.85} stroke='black' strokeWidth='.04' fill='transparent' />
       <circle r={0.8} stroke='black' strokeWidth='.01' fill='transparent' />
       <circle r={0.775} stroke='black' strokeWidth='.01' fill='transparent' />
-      <circle r={0.5} stroke='black' strokeWidth='.015' fill='transparent' />
 
-      <Spokes radius={0.85} innerRadius={0.5} stroke='black' strokeWidth={0.005} strokeDasharray={[0.03, 0.03]} />
+      <Arrow angle={onesValue * 36} radius={0.9} />
 
-      <PieChart fill='#B7D4DD' radius={0.45} offsetAngle={-18}>
+      <Spokes radius={0.85} innerRadius={0.45} stroke='black' strokeWidth={0.005} strokeDasharray={[0.03, 0.03]} />
+
+      <PieChart fill='#B7D4DD' radius={0.45} offsetAngle={-18} onClickHandler={tensClickHandler}>
         <PieSegment label={0} labelRadius={0.3} />
         <PieSegment label={1} labelRadius={0.3} />
         <PieSegment label={2} labelRadius={0.3} />
@@ -68,6 +85,8 @@ export default ({ name }) => {
       <circle r={0.04} stroke='black' strokeWidth='.01' fill='transparent' />
 
       <Spokes radius={0.425} stroke='black' strokeWidth='.005' strokeDasharray={[0.03, 0.03]} />
+
+      <Arrow angle={tensValue * 36} radius={0.5} />
 
     </SvgWrapper>
   )
