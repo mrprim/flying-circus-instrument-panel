@@ -41,6 +41,19 @@ const FuelBarCell = ({ value }) => {
   )
 }
 
+const DataRow = ({ fuel }) => {
+  const { value: boost } = useField({ name: 'boost.' + fuel })
+  const { value: handling } = useField({ name: 'handling.' + fuel })
+  const { value: stall } = useField({ name: 'stall.' + fuel })
+
+  return (
+    <>
+      <td className='cell'>{boost}</td>
+      <td className='cell'>{handling}</td>
+      <td className='cell'>{stall}</td>
+    </>
+  )
+}
 export default () => {
   return (
     <table className='wet-stats-table'>
@@ -62,9 +75,7 @@ export default () => {
             <div>Full Load</div>
             <div>&nbsp;</div>
           </th>
-          <td className='cell'>2</td>
-          <td className='cell'>-8</td>
-          <td className='cell'>8</td>
+          <DataRow fuel={4} />
         </Row>
         <Row value={3}>
           <FuelBarCell value={3} />
@@ -73,9 +84,7 @@ export default () => {
             <div>Half Fuel</div>
             <div>Bombs</div>
           </th>
-          <td className='cell'>3</td>
-          <td className='cell'>-6</td>
-          <td className='cell'>7</td>
+          <DataRow fuel={3} />
         </Row>
         <Row value={2}>
           <FuelBarCell value={2} />
@@ -85,9 +94,7 @@ export default () => {
             <div>Full Fuel</div>
             <div>No Bombs</div>
           </th>
-          <td className='cell'>2</td>
-          <td className='cell'>-7</td>
-          <td className='cell'>8</td>
+          <DataRow fuel={2} />
         </Row>
         <Row value={1}>
           <FuelBarCell value={1} />
@@ -97,9 +104,7 @@ export default () => {
             <div>No Bombs</div>
             <div>Half Fuel</div>
           </th>
-          <td className='cell'>3</td>
-          <td className='cell'>-5</td>
-          <td className='cell'>6</td>
+          <DataRow fuel={1} />
         </Row>
         <Row value={0}>
           <FuelBarCell value={0} />
@@ -109,9 +114,7 @@ export default () => {
             <div>Empty</div>
             <div>&nbsp;</div>
           </th>
-          <td className='cell'>3</td>
-          <td className='cell'>-4</td>
-          <td className='cell'>5</td>
+          <DataRow fuel={0} />
         </Row>
       </tbody>
     </table>
